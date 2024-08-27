@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    
+    form{
+        border: solid 2px ;
+        height: 550px;
+        width: 400px;
+        color: rgb(255, 255, 255);
+        background-color: rgb(20, 90, 110);
+    }
+    input{
+        margin: 10px;
+    }
+    table {
+            margin: 20px auto;
+            border-spacing: 10px;
+        }
+        td {
+            padding: 5px;
+        }
+        input, select {
+            margin: 5px 0;
+            padding: 5px;
+            width: 100%;
+        }
+        label {
+            margin-right: 10px;
+            
+        }
+        .btn{
+            color: black;
+            background-color: plum;
+        }
+        .btn:hover{
+            color: black;
+            background-color: limegreen;
+        }
+</style>
+<body>
+    <form id="bookingForm">
+        <table>
+            <tr>
+                <td><label for="bookingChoice">Choice of Booking:</label></td>
+                <td>
+                    <select id="bookingChoice">
+                        <option value="full-day">Full day booking</option>
+                        <option value="half-day">Half day booking</option>
+                        <option value="hourly">Hourly booking</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="userName">User Name:</label></td>
+                <td><input type="text" id="userName" required></td>
+            </tr>
+
+            <tr>
+                <td><label for="mobileNumber">Mobile Number:</label></td>
+                <td><input type="tel" id="mobileNumber" required></td>
+            </tr>
+
+            <tr>
+                <td><label for="email">Email:</label></td>
+                <td><input type="email" id="email" required></td>
+            </tr>
+
+            <tr>
+                <td><label for="noOfPerson">No of Person:</label></td>
+                <td><input type="number" id="noOfPerson" min="1" required></td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <div id="additionalFields"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <input type="submit" value="Book Now" class="btn">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        const bookingChoice = document.getElementById('bookingChoice');
+        const additionalFields = document.getElementById('additionalFields');
+
+        bookingChoice.addEventListener('change', () => {
+            additionalFields.innerHTML = '';
+
+            if (bookingChoice.value !== 'full-day') {
+                const dateLabel = document.createElement('label');
+                dateLabel.textContent = 'Date:';
+                const dateInput = document.createElement('input');
+                dateInput.type = 'date';
+                dateInput.required = true;
+                additionalFields.appendChild(dateLabel);
+                additionalFields.appendChild(dateInput);
+            }
+
+            if (bookingChoice.value === 'half-day') {
+                const slotLabel = document.createElement('label');
+                slotLabel.textContent = 'Slot:';
+                const slotSelect = document.createElement('select');
+                ['Breakfast', 'Lunch', 'Dinner'].forEach(slot => {
+                    const option = document.createElement('option');
+                    option.value = slot.toLowerCase();
+                    option.textContent = slot;
+                    slotSelect.appendChild(option);
+                });
+                additionalFields.appendChild(slotLabel);
+                additionalFields.appendChild(slotSelect);
+            } else if (bookingChoice.value === 'hourly') {
+                const timeLabel = document.createElement('label');
+                timeLabel.textContent = 'Time:';
+                const timeInput = document.createElement('input');
+                timeInput.type = 'time';
+                timeInput.required = true;
+                additionalFields.appendChild(timeLabel);
+                additionalFields.appendChild(timeInput);
+            }
+        });
+
+    </script>
+</body>
+</html>
